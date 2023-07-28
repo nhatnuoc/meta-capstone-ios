@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0F7AEE592A73C9DD005EFF1A /* UserProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7AEE582A73C9DD005EFF1A /* UserProfileView.swift */; };
 		0F9F88002A5510F900E92E30 /* meta_ios_capstoneApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9F87FF2A5510F900E92E30 /* meta_ios_capstoneApp.swift */; };
 		0F9F88022A5510F900E92E30 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9F88012A5510F900E92E30 /* OnboardingView.swift */; };
 		0F9F88042A5510FA00E92E30 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0F9F88032A5510FA00E92E30 /* Assets.xcassets */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0F7AEE582A73C9DD005EFF1A /* UserProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileView.swift; sourceTree = "<group>"; };
 		0F9F87FC2A5510F900E92E30 /* meta-ios-capstone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "meta-ios-capstone.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F9F87FF2A5510F900E92E30 /* meta_ios_capstoneApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = meta_ios_capstoneApp.swift; sourceTree = "<group>"; };
 		0F9F88012A5510F900E92E30 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
@@ -61,6 +63,7 @@
 				0F9F880F2A56C45100E92E30 /* MenuView.swift */,
 				0F9F88032A5510FA00E92E30 /* Assets.xcassets */,
 				0F9F88052A5510FA00E92E30 /* Preview Content */,
+				0F7AEE582A73C9DD005EFF1A /* UserProfileView.swift */,
 			);
 			path = "meta-ios-capstone";
 			sourceTree = "<group>";
@@ -143,6 +146,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0F7AEE592A73C9DD005EFF1A /* UserProfileView.swift in Sources */,
 				0F9F880E2A569FAF00E92E30 /* HomeView.swift in Sources */,
 				0F9F88102A56C45100E92E30 /* MenuView.swift in Sources */,
 				0F9F88022A5510F900E92E30 /* OnboardingView.swift in Sources */,

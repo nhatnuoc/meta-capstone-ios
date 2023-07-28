@@ -7,14 +7,16 @@
 
 import SwiftUI
 
+let kFirstName = "kFirstName"
+let kLastName = "kLastName"
+let kEmail = "kEmail"
+let kIsLoggedIn = "kIsLoggedIn"
+
 struct OnboardingView: View {
     @State var firstName: String = ""
     @State var lastName: String = ""
     @State var email: String = ""
     @State var isLoggedIn = false
-    let kFirstName = "kFirstName"
-    let kLastName = "kLastName"
-    let kEmail = "kEmail"
     
     var body: some View {
         NavigationView(content: {
@@ -41,6 +43,7 @@ struct OnboardingView: View {
                     UserDefaults.standard.set(firstName, forKey: kFirstName)
                     UserDefaults.standard.set(lastName, forKey: kLastName)
                     UserDefaults.standard.set(email, forKey: kEmail)
+                    isLoggedIn = true
                 } label: {
                     Text("Register")
                 }

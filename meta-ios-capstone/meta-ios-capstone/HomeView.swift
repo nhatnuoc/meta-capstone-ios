@@ -19,7 +19,16 @@ struct HomeView: View {
                     }
 
                 }
-        }
+            UserProfileView()
+                .tabItem {
+                    Label {
+                        Text("Profile")
+                    } icon: {
+                        Image(systemName: "square.and.pencil")
+                    }
+
+                }
+        }.navigationBarBackButtonHidden(true)
     }
 }
 
