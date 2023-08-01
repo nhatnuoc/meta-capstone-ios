@@ -21,11 +21,12 @@ struct UserProfileView: View {
             Text(lastName ?? "")
             Text(email ?? "")
             Button {
-                
+                UserDefaults.standard.set(false, forKey: kIsLoggedIn)
+                self.presentation.wrappedValue.dismiss()
             } label: {
                 Text("Log out")
             }
-
+            Spacer()
         }
     }
 }

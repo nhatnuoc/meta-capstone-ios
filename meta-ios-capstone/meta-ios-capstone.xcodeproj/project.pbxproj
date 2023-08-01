@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0F262B892A77C0970088DEBB /* MenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F262B882A77C0970088DEBB /* MenuItem.swift */; };
+		0F262BA92A79264A0088DEBB /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F262BA72A7926490088DEBB /* Persistence.swift */; };
+		0F262BAA2A79264A0088DEBB /* FetchedObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F262BA82A7926490088DEBB /* FetchedObjects.swift */; };
+		0F262BAC2A79267A0088DEBB /* MenuList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F262BAB2A79267A0088DEBB /* MenuList.swift */; };
+		0F262BAF2A7928F40088DEBB /* ExampleDatabase.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0F262BAD2A7928F40088DEBB /* ExampleDatabase.xcdatamodeld */; };
 		0F7AEE592A73C9DD005EFF1A /* UserProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7AEE582A73C9DD005EFF1A /* UserProfileView.swift */; };
 		0F9F88002A5510F900E92E30 /* meta_ios_capstoneApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9F87FF2A5510F900E92E30 /* meta_ios_capstoneApp.swift */; };
 		0F9F88022A5510F900E92E30 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9F88012A5510F900E92E30 /* OnboardingView.swift */; };
@@ -17,6 +22,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0F262B882A77C0970088DEBB /* MenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItem.swift; sourceTree = "<group>"; };
+		0F262BA72A7926490088DEBB /* Persistence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		0F262BA82A7926490088DEBB /* FetchedObjects.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchedObjects.swift; sourceTree = "<group>"; };
+		0F262BAB2A79267A0088DEBB /* MenuList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuList.swift; sourceTree = "<group>"; };
+		0F262BAE2A7928F40088DEBB /* ExampleDatabase.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ExampleDatabase.xcdatamodel; sourceTree = "<group>"; };
 		0F7AEE582A73C9DD005EFF1A /* UserProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileView.swift; sourceTree = "<group>"; };
 		0F9F87FC2A5510F900E92E30 /* meta-ios-capstone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "meta-ios-capstone.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F9F87FF2A5510F900E92E30 /* meta_ios_capstoneApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = meta_ios_capstoneApp.swift; sourceTree = "<group>"; };
@@ -64,6 +74,11 @@
 				0F9F88032A5510FA00E92E30 /* Assets.xcassets */,
 				0F9F88052A5510FA00E92E30 /* Preview Content */,
 				0F7AEE582A73C9DD005EFF1A /* UserProfileView.swift */,
+				0F262BA82A7926490088DEBB /* FetchedObjects.swift */,
+				0F262BA72A7926490088DEBB /* Persistence.swift */,
+				0F262B882A77C0970088DEBB /* MenuItem.swift */,
+				0F262BAB2A79267A0088DEBB /* MenuList.swift */,
+				0F262BAD2A7928F40088DEBB /* ExampleDatabase.xcdatamodeld */,
 			);
 			path = "meta-ios-capstone";
 			sourceTree = "<group>";
@@ -146,11 +161,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0F262BAA2A79264A0088DEBB /* FetchedObjects.swift in Sources */,
 				0F7AEE592A73C9DD005EFF1A /* UserProfileView.swift in Sources */,
 				0F9F880E2A569FAF00E92E30 /* HomeView.swift in Sources */,
+				0F262BA92A79264A0088DEBB /* Persistence.swift in Sources */,
 				0F9F88102A56C45100E92E30 /* MenuView.swift in Sources */,
+				0F262BAF2A7928F40088DEBB /* ExampleDatabase.xcdatamodeld in Sources */,
+				0F262B892A77C0970088DEBB /* MenuItem.swift in Sources */,
 				0F9F88022A5510F900E92E30 /* OnboardingView.swift in Sources */,
 				0F9F88002A5510F900E92E30 /* meta_ios_capstoneApp.swift in Sources */,
+				0F262BAC2A79267A0088DEBB /* MenuList.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -349,6 +369,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		0F262BAD2A7928F40088DEBB /* ExampleDatabase.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				0F262BAE2A7928F40088DEBB /* ExampleDatabase.xcdatamodel */,
+			);
+			currentVersion = 0F262BAE2A7928F40088DEBB /* ExampleDatabase.xcdatamodel */;
+			path = ExampleDatabase.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 0F9F87F42A5510F900E92E30 /* Project object */;
 }

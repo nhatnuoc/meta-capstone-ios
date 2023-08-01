@@ -43,12 +43,15 @@ struct OnboardingView: View {
                     UserDefaults.standard.set(firstName, forKey: kFirstName)
                     UserDefaults.standard.set(lastName, forKey: kLastName)
                     UserDefaults.standard.set(email, forKey: kEmail)
+                    UserDefaults.standard.set(true, forKey: kIsLoggedIn)
                     isLoggedIn = true
                 } label: {
                     Text("Register")
                 }
 
-            }
+            }.onAppear(perform: {
+                self.isLoggedIn = UserDefaults.standard.bool(forKey: kIsLoggedIn)
+            })
         })
         .padding()
     }
