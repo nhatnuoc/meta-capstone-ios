@@ -9,23 +9,32 @@ import SwiftUI
 
 struct MenuView: View {
     @Environment(\.managedObjectContext) private var viewContext
+    @State var searchText: String = ""
     
     var body: some View {
         VStack {
             Text("the title of your application")
             Text("Restaurant location")
             Text(" short description of the whole application")
-            FetchedObjects { (dishes: [Dish]) in
-                List {
-                    ForEach(dishes) { dish in
-                        HStack {
-                            Text("\(dish.title ?? ""): \(dish.price ?? "")")
-                            AsyncImage(url: URL(string: dish.image ?? ""))
-                                .frame(width: 60, height: 60)
+            TextField("Search menu", text: $searchText)
+            FetchedObjects(
+                predicate: buildPredicate(),
+                sortDescriptors: buildSortDescriptors(),
+                content: { (dishes: [Dish]) in
+                    List {
+                        ForEach(dishes) { dish in
+                            HStack {
+                                Text("\(dish.title ?? ""): \(dish.price ?? "")")
+                                Spacer()
+                                AsyncImage(url: URL(string: dish.image ?? "")) { image in
+                                    image.resizable()
+                                } placeholder: {
+                                    ProgressView()
+                                }.frame(width: 60, height: 60)
+                            }
                         }
                     }
-                }
-            }
+                })
         }.onAppear {
             self.getMenuData()
         }
@@ -39,11 +48,10 @@ struct MenuView: View {
             guard let data = data else {
                 return
             }
-            print(String(data: data, encoding: .utf8))
             guard let menuList = try? JSONDecoder().decode(MenuList.self, from: data) else { return }
             PersistenceController.shared.clear()
             menuList.menu.forEach { menuItem in
-                let dish = Dish()
+                let dish = Dish(context: self.viewContext)
                 dish.image = menuItem.image
                 dish.price = menuItem.price
                 dish.title = menuItem.title
@@ -51,6 +59,19 @@ struct MenuView: View {
             try? self.viewContext.save()
         }
         task.resume()
+    }
+    
+    func buildPredicate() -> NSPredicate {
+        if self.searchText.isEmpty {
+            return NSPredicate(value: true)
+        }
+        return NSPredicate(format: "title CONTAINS[cd] %@", self.searchText)
+    }
+    
+    func buildSortDescriptors() -> [NSSortDescriptor] {
+        return [
+            NSSortDescriptor(key: "title", ascending: true, selector: #selector(NSString.localizedStandardCompare))
+        ]
     }
 }
 

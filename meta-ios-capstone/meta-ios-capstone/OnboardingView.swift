@@ -21,9 +21,13 @@ struct OnboardingView: View {
     var body: some View {
         NavigationView(content: {
             VStack {
+                Text("First Name")
                 TextField("First Name", text: $firstName)
                 TextField("Last Name", text: $lastName)
-                TextField("Email", text: $email)
+                
+                LabeledContent("Email") {
+                    TextField("Email", text: $email, prompt: Text("Email"))
+                }
                 NavigationLink(isActive: $isLoggedIn) {
                     HomeView()
                 } label: {
@@ -60,5 +64,16 @@ struct OnboardingView: View {
 struct OnboardingView_Previews: PreviewProvider {
     static var previews: some View {
         OnboardingView()
+    }
+}
+
+struct InputTextForm: View {
+    @State var text: String
+    
+    var body: some View {
+        VStack {
+            Text("Email")
+            TextField("Email", text: $text, prompt: Text("Email"))
+        }
     }
 }

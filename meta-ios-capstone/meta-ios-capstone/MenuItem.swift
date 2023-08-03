@@ -8,9 +8,10 @@
 import Foundation
 
 struct MenuItem: Codable, Identifiable {
-    var id = UUID()
+    let id: Int
     let title: String
     let price: String
     let description: String
     let image: String
+    let category: String
 }
