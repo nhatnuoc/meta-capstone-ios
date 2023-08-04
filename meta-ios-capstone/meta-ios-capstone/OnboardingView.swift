@@ -21,13 +21,9 @@ struct OnboardingView: View {
     var body: some View {
         NavigationView(content: {
             VStack {
-                Text("First Name")
-                TextField("First Name", text: $firstName)
-                TextField("Last Name", text: $lastName)
-                
-                LabeledContent("Email") {
-                    TextField("Email", text: $email, prompt: Text("Email"))
-                }
+                InputTextForm(text: $firstName, textLabel: "First Name")
+                InputTextForm(text: $lastName, textLabel: "Last Name")
+                InputTextForm(text: $email, textLabel: "Email")
                 NavigationLink(isActive: $isLoggedIn) {
                     HomeView()
                 } label: {
@@ -58,6 +54,9 @@ struct OnboardingView: View {
             })
         })
         .padding()
+        .toolbar {
+            Image("logo")
+        }
     }
 }
 
@@ -68,12 +67,13 @@ struct OnboardingView_Previews: PreviewProvider {
 }
 
 struct InputTextForm: View {
-    @State var text: String
+    @Binding var text: String
+    var textLabel: String
     
     var body: some View {
         VStack {
-            Text("Email")
-            TextField("Email", text: $text, prompt: Text("Email"))
+            Text(self.textLabel)
+            TextField(self.textLabel, text: $text, prompt: Text("Email"))
         }
     }
 }
