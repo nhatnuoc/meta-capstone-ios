@@ -14,19 +14,28 @@ struct UserProfileView: View {
     @Environment(\.presentationMode) var presentation
     
     var body: some View {
-        VStack {
-            Text("Personal information")
-            Image("profile-image-placeholder")
-            Text(firstName ?? "")
-            Text(lastName ?? "")
-            Text(email ?? "")
-            Button {
-                UserDefaults.standard.set(false, forKey: kIsLoggedIn)
-                self.presentation.wrappedValue.dismiss()
-            } label: {
-                Text("Log out")
+        NavigationView {
+            VStack {
+                Text("Personal information")
+                Image("profile-image-placeholder")
+                Text(firstName ?? "")
+                Text(lastName ?? "")
+                Text(email ?? "")
+                Button {
+                    UserDefaults.standard.set(false, forKey: kIsLoggedIn)
+                    self.presentation.wrappedValue.dismiss()
+                } label: {
+                    Text("Log out")
+                }
+                Spacer()
+            }.toolbar {
+                ToolbarItem(placement: .principal, content: {
+                    Image("logo")
+                })
+                ToolbarItem(placement: .navigationBarTrailing, content: {
+                    Image("profile-image-placeholder")
+                })
             }
-            Spacer()
         }
     }
 }

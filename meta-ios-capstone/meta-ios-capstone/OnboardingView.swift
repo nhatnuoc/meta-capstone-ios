@@ -21,9 +21,31 @@ struct OnboardingView: View {
     var body: some View {
         NavigationView(content: {
             VStack {
+                VStack(alignment: .leading) {
+                    Text("Little Lemon")
+                        .font(.system(size: 32, weight: .semibold))
+                        .foregroundColor(.yellow)
+                    HStack {
+                        VStack(alignment: .leading) {
+                            Text("Chicago")
+                                .font(.system(size: 30, weight: .semibold))
+                                .foregroundColor(.white)
+                            Text("We are a family owned Mediterranean restaurant, focused on traditional recipes served with a modern twist.")
+                                .font(.system(size: 22, weight: .semibold))
+                                .foregroundColor(.white)
+                        }
+                        Image("Hero_image")
+                            .resizable()
+                            .cornerRadius(12)
+                            
+                    }
+                }.padding(12).background(.green)
                 InputTextForm(text: $firstName, textLabel: "First Name")
+                    .padding(.vertical)
                 InputTextForm(text: $lastName, textLabel: "Last Name")
+                    .padding(.vertical)
                 InputTextForm(text: $email, textLabel: "Email")
+                    .padding(.vertical)
                 NavigationLink(isActive: $isLoggedIn) {
                     HomeView()
                 } label: {
@@ -47,16 +69,18 @@ struct OnboardingView: View {
                     isLoggedIn = true
                 } label: {
                     Text("Register")
-                }
-
+                }.padding(.vertical)
+                Spacer()
             }.onAppear(perform: {
                 self.isLoggedIn = UserDefaults.standard.bool(forKey: kIsLoggedIn)
             })
+            .toolbar {
+                ToolbarItem(placement: .principal, content: {
+                    Image("logo")
+                })
+            }
         })
-        .padding()
-        .toolbar {
-            Image("logo")
-        }
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
@@ -71,9 +95,12 @@ struct InputTextForm: View {
     var textLabel: String
     
     var body: some View {
-        VStack {
+        VStack(alignment: .leading) {
             Text(self.textLabel)
-            TextField(self.textLabel, text: $text, prompt: Text("Email"))
-        }
+                .fontWeight(.semibold)
+                .foregroundColor(.gray)
+            TextField(self.textLabel, text: $text, prompt: Text(self.textLabel))
+                .textFieldStyle(.roundedBorder)
+        }.padding(.horizontal)
     }
 }

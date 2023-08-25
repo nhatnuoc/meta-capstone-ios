@@ -12,31 +12,68 @@ struct MenuView: View {
     @State var searchText: String = ""
     
     var body: some View {
-        VStack {
-            Text("the title of your application")
-            Text("Restaurant location")
-            Text(" short description of the whole application")
-            TextField("Search menu", text: $searchText)
-            FetchedObjects(
-                predicate: buildPredicate(),
-                sortDescriptors: buildSortDescriptors(),
-                content: { (dishes: [Dish]) in
-                    List {
-                        ForEach(dishes) { dish in
-                            HStack {
-                                Text("\(dish.title ?? ""): \(dish.price ?? "")")
-                                Spacer()
-                                AsyncImage(url: URL(string: dish.image ?? "")) { image in
-                                    image.resizable()
-                                } placeholder: {
-                                    ProgressView()
-                                }.frame(width: 60, height: 60)
+        NavigationView {
+            VStack {
+                FetchedObjects(
+                    predicate: buildPredicate(),
+                    sortDescriptors: buildSortDescriptors(),
+                    content: { (dishes: [Dish]) in
+                        List {
+                            VStack(alignment: .leading) {
+                                Text("Little Lemon")
+                                    .font(.system(size: 32, weight: .semibold))
+                                    .foregroundColor(.yellow)
+                                HStack(alignment: .top) {
+                                    VStack(alignment: .leading) {
+                                        Text("Chicago")
+                                            .font(.system(size: 30, weight: .semibold))
+                                            .foregroundColor(.white)
+                                        Text("We are a family owned Mediterranean restaurant, focused on traditional recipes served with a modern twist.")
+                                            .font(.system(size: 22, weight: .semibold))
+                                            .foregroundColor(.white)
+                                    }
+                                    Image("Hero_image")
+                                        .resizable()
+                                        .cornerRadius(12)
+                                        .frame(width: 80, height: 80)
+                                        
+                                }
+                                TextField("Search menu", text: $searchText)
+                            }.padding(12).background(.green)
+                            ForEach(dishes) { dish in
+                                HStack(alignment: .top) {
+                                    VStack(alignment: .leading) {
+                                        Text("\(dish.title ?? "")")
+                                            .fontWeight(.bold)
+                                            .foregroundColor(.black)
+                                        Text(dish.description_ ?? "")
+                                            .fontWeight(.medium)
+                                            .foregroundColor(.gray)
+                                        Text("\(dish.price ?? "0")$")
+                                            .fontWeight(.semibold)
+                                            .foregroundColor(.mint)
+                                    }
+                                    Spacer()
+                                    AsyncImage(url: URL(string: dish.image ?? "")) { image in
+                                        image.resizable()
+                                    } placeholder: {
+                                        ProgressView()
+                                    }.frame(width: 60, height: 60)
+                                        .cornerRadius(12)
+                                }
                             }
                         }
-                    }
+                    })
+            }.toolbar {
+                ToolbarItem(placement: .principal, content: {
+                    Image("logo")
                 })
-        }.onAppear {
-            self.getMenuData()
+                ToolbarItem(placement: .navigationBarTrailing, content: {
+                    Image("profile-image-placeholder")
+                })
+            }.onAppear {
+                self.getMenuData()
+            }
         }
     }
     
@@ -48,13 +85,16 @@ struct MenuView: View {
             guard let data = data else {
                 return
             }
+            print("data: ", String(data: data, encoding: .utf8))
             guard let menuList = try? JSONDecoder().decode(MenuList.self, from: data) else { return }
             PersistenceController.shared.clear()
+            try? self.viewContext.save()
             menuList.menu.forEach { menuItem in
                 let dish = Dish(context: self.viewContext)
                 dish.image = menuItem.image
                 dish.price = menuItem.price
                 dish.title = menuItem.title
+                dish.description_ = menuItem.description_
             }
             try? self.viewContext.save()
         }
