@@ -12,68 +12,75 @@ struct MenuView: View {
     @State var searchText: String = ""
     
     var body: some View {
-        NavigationView {
-            VStack {
-                FetchedObjects(
-                    predicate: buildPredicate(),
-                    sortDescriptors: buildSortDescriptors(),
-                    content: { (dishes: [Dish]) in
-                        List {
-                            VStack(alignment: .leading) {
-                                Text("Little Lemon")
-                                    .font(.system(size: 32, weight: .semibold))
-                                    .foregroundColor(.yellow)
-                                HStack(alignment: .top) {
-                                    VStack(alignment: .leading) {
-                                        Text("Chicago")
-                                            .font(.system(size: 30, weight: .semibold))
-                                            .foregroundColor(.white)
-                                        Text("We are a family owned Mediterranean restaurant, focused on traditional recipes served with a modern twist.")
-                                            .font(.system(size: 22, weight: .semibold))
-                                            .foregroundColor(.white)
-                                    }
-                                    Image("Hero_image")
-                                        .resizable()
-                                        .cornerRadius(12)
-                                        .frame(width: 80, height: 80)
-                                        
+        VStack {
+            FetchedObjects(
+                predicate: buildPredicate(),
+                sortDescriptors: buildSortDescriptors(),
+                content: { (dishes: [Dish]) in
+                        
+                    List {
+                        VStack(alignment: .leading) {
+                            Text("Little Lemon")
+                                .font(.system(size: 32, weight: .semibold))
+                                .foregroundColor(.yellow)
+                            HStack(alignment: .top) {
+                                VStack(alignment: .leading) {
+                                    Text("Chicago")
+                                        .font(.system(size: 30, weight: .semibold))
+                                        .foregroundColor(.white)
+                                    Text("We are a family owned Mediterranean restaurant, focused on traditional recipes served with a modern twist.")
+                                        .font(.system(size: 22, weight: .semibold))
+                                        .foregroundColor(.white)
                                 }
-                                TextField("Search menu", text: $searchText)
-                            }.padding(12).background(.green)
-                            ForEach(dishes) { dish in
-                                HStack(alignment: .top) {
-                                    VStack(alignment: .leading) {
-                                        Text("\(dish.title ?? "")")
-                                            .fontWeight(.bold)
-                                            .foregroundColor(.black)
-                                        Text(dish.description_ ?? "")
-                                            .fontWeight(.medium)
-                                            .foregroundColor(.gray)
-                                        Text("\(dish.price ?? "0")$")
-                                            .fontWeight(.semibold)
-                                            .foregroundColor(.mint)
-                                    }
-                                    Spacer()
-                                    AsyncImage(url: URL(string: dish.image ?? "")) { image in
-                                        image.resizable()
-                                    } placeholder: {
-                                        ProgressView()
-                                    }.frame(width: 60, height: 60)
-                                        .cornerRadius(12)
+                                Image("Hero_image")
+                                    .resizable()
+                                    .cornerRadius(12)
+                                    .frame(width: 80, height: 80)
+                                    
+                            }
+                            TextField("Search menu", text: $searchText)
+                                .textFieldStyle(.roundedBorder)
+//                                    .frame(height: 44)
+                        }.padding(12).background(.green)
+                            .listRowInsets(EdgeInsets())
+                        ForEach(dishes) { dish in
+                            HStack(alignment: .top) {
+                                VStack(alignment: .leading) {
+                                    Text("\(dish.title ?? "")")
+                                        .fontWeight(.bold)
+                                        .foregroundColor(.black)
+                                    Text(dish.description_ ?? "")
+                                        .fontWeight(.medium)
+                                        .foregroundColor(.gray)
+                                    Text("\(dish.price ?? "0")$")
+                                        .fontWeight(.semibold)
+                                        .foregroundColor(.mint)
                                 }
+                                Spacer()
+                                AsyncImage(url: URL(string: dish.image ?? "")) { image in
+                                    image.resizable()
+                                } placeholder: {
+                                    ProgressView()
+                                }.frame(width: 60, height: 60)
+                                    .cornerRadius(12)
                             }
                         }
-                    })
-            }.toolbar {
-                ToolbarItem(placement: .principal, content: {
-                    Image("logo")
+                    }
                 })
-                ToolbarItem(placement: .navigationBarTrailing, content: {
+        }.toolbar {
+            ToolbarItem(placement: .principal, content: {
+                Image("logo")
+            })
+            ToolbarItem(placement: .navigationBarTrailing, content: {
+                NavigationLink {
+                    UserProfileView()
+                } label: {
                     Image("profile-image-placeholder")
-                })
-            }.onAppear {
-                self.getMenuData()
-            }
+                }
+
+            })
+        }.onAppear {
+            self.getMenuData()
         }
     }
     

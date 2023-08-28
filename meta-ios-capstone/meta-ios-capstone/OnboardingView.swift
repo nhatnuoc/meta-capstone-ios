@@ -10,6 +10,7 @@ import SwiftUI
 let kFirstName = "kFirstName"
 let kLastName = "kLastName"
 let kEmail = "kEmail"
+let kPhoneNumber = "kPhoneNumber"
 let kIsLoggedIn = "kIsLoggedIn"
 
 struct OnboardingView: View {
