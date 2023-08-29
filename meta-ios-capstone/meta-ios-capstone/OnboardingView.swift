@@ -12,6 +12,10 @@ let kLastName = "kLastName"
 let kEmail = "kEmail"
 let kPhoneNumber = "kPhoneNumber"
 let kIsLoggedIn = "kIsLoggedIn"
+let kOrderStatuses = "kOrderStatuses"
+let kPasswordChanged = "kPasswordChanged"
+let kSpecialOffers = "kSpecialOffers"
+let kNewsletter = "kNewsletter"
 
 struct OnboardingView: View {
     @State var firstName: String = ""
