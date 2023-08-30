@@ -16,6 +16,7 @@ let kOrderStatuses = "kOrderStatuses"
 let kPasswordChanged = "kPasswordChanged"
 let kSpecialOffers = "kSpecialOffers"
 let kNewsletter = "kNewsletter"
+let kAvatar = "kAvatar"
 
 struct OnboardingView: View {
     @State var firstName: String = ""
@@ -106,6 +107,6 @@ struct InputTextForm: View {
                 .foregroundColor(.gray)
             TextField(self.textLabel, text: $text, prompt: Text(self.textLabel))
                 .textFieldStyle(.roundedBorder)
-        }.padding(.horizontal)
+        }
     }
 }
