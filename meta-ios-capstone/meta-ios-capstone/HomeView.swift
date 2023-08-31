@@ -7,33 +7,40 @@
 
 import SwiftUI
 
+let kTabMenu = "kTabMenu"
+let kTabUserProfile = "kTabUserProfile"
+
 struct HomeView: View {
     let persistence = PersistenceController.shared
+    @State var selectedTab = kTabMenu
     
     var body: some View {
-        MenuView()
-            .environment(\.managedObjectContext, persistence.container.viewContext)
-            .navigationBarBackButtonHidden(true)
-//        TabView {
-//            MenuView()
-//                .tabItem {
-//                    Label {
-//                        Text("Menu")
-//                    } icon: {
-//                        Image(systemName: "list.dash")
-//                    }
-//
-//                }.environment(\.managedObjectContext, persistence.container.viewContext)
-//            UserProfileView()
-//                .tabItem {
-//                    Label {
-//                        Text("Profile")
-//                    } icon: {
-//                        Image(systemName: "square.and.pencil")
-//                    }
-//
-//                }
-//        }.navigationBarBackButtonHidden(true)
+        TabView(selection: self.$selectedTab) {
+            NavigationStack(root: {
+                MenuView(selectedTab: self.$selectedTab)
+            })
+                .tabItem {
+                    Label {
+                        Text("Menu")
+                    } icon: {
+                        Image(systemName: "list.dash")
+                    }
+
+                }.environment(\.managedObjectContext, persistence.container.viewContext)
+                .tag(kTabMenu)
+            NavigationStack(root: {
+                UserProfileView()
+                    .environment(\.managedObjectContext, persistence.container.viewContext)
+            })
+                .tabItem {
+                    Label {
+                        Text("Profile")
+                    } icon: {
+                        Image(systemName: "square.and.pencil")
+                    }
+
+                }.tag(kTabUserProfile)
+        }.navigationBarBackButtonHidden(true)
     }
 }
 

@@ -17,6 +17,7 @@ struct PersistenceController {
         // Delete all dishes from the store
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Dish")
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
-        let _ = try? container.persistentStoreCoordinator.execute(deleteRequest, with: container.viewContext)
+//        let _ = try? container.persistentStoreCoordinator.execute(deleteRequest, with: container.viewContext)
+        let _ = try? container.viewContext.execute(deleteRequest)
     }
 }

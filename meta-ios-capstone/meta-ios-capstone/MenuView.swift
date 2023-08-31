@@ -10,6 +10,8 @@ import SwiftUI
 struct MenuView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @State var searchText: String = ""
+    @Binding var selectedTab: String
+    @State var categories: [String] = []
     
     var body: some View {
         VStack {
@@ -17,7 +19,6 @@ struct MenuView: View {
                 predicate: buildPredicate(),
                 sortDescriptors: buildSortDescriptors(),
                 content: { (dishes: [Dish]) in
-                        
                     List {
                         VStack(alignment: .leading) {
                             Text("Little Lemon")
@@ -41,6 +42,11 @@ struct MenuView: View {
                             TextField("Search menu", text: $searchText)
                                 .textFieldStyle(.roundedBorder)
 //                                    .frame(height: 44)
+                            ScrollView(.horizontal) {
+                                ForEach(self.categories) { item in
+                                    Text(item)
+                                }
+                            }
                         }.padding(12).background(.green)
                             .listRowInsets(EdgeInsets())
                         ForEach(dishes) { dish in
@@ -72,12 +78,11 @@ struct MenuView: View {
                 Image("logo")
             })
             ToolbarItem(placement: .navigationBarTrailing, content: {
-                NavigationLink {
-                    UserProfileView()
+                Button {
+                    self.selectedTab = kTabUserProfile
                 } label: {
                     Image("profile-image-placeholder")
                 }
-
             })
         }.onAppear {
             self.getMenuData()
@@ -93,9 +98,8 @@ struct MenuView: View {
                 return
             }
             print("data: ", String(data: data, encoding: .utf8))
-            guard let menuList = try? JSONDecoder().decode(MenuList.self, from: data) else { return }
             PersistenceController.shared.clear()
-            try? self.viewContext.save()
+            guard let menuList = try? JSONDecoder().decode(MenuList.self, from: data) else { return }
             menuList.menu.forEach { menuItem in
                 let dish = Dish(context: self.viewContext)
                 dish.image = menuItem.image
@@ -122,8 +126,10 @@ struct MenuView: View {
     }
 }
 
-struct MenuView_Previews: PreviewProvider {
-    static var previews: some View {
-        MenuView()
-    }
-}
+//struct MenuView_Previews: PreviewProvider {
+//    @State var selectedTab = kTabMenu
+//
+//    static var previews: some View {
+//        MenuView(selectedTab: )
+//    }
+//}

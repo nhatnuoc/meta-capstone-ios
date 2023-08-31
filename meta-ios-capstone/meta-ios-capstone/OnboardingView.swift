@@ -23,62 +23,77 @@ struct OnboardingView: View {
     @State var lastName: String = ""
     @State var email: String = ""
     @State var isLoggedIn = false
+    @Environment(\.managedObjectContext) var viewContext
     
     var body: some View {
         NavigationView(content: {
-            VStack {
-                VStack(alignment: .leading) {
-                    Text("Little Lemon")
-                        .font(.system(size: 32, weight: .semibold))
-                        .foregroundColor(.yellow)
-                    HStack {
-                        VStack(alignment: .leading) {
-                            Text("Chicago")
-                                .font(.system(size: 30, weight: .semibold))
-                                .foregroundColor(.white)
-                            Text("We are a family owned Mediterranean restaurant, focused on traditional recipes served with a modern twist.")
-                                .font(.system(size: 22, weight: .semibold))
-                                .foregroundColor(.white)
+            ScrollView(content: {
+                VStack {
+                    VStack(alignment: .leading) {
+                        Text("Little Lemon")
+                            .font(.system(size: 32, weight: .semibold))
+                            .foregroundColor(.yellow)
+                        HStack {
+                            VStack(alignment: .leading) {
+                                Text("Chicago")
+                                    .font(.system(size: 30, weight: .semibold))
+                                    .foregroundColor(.white)
+                                Text("We are a family owned Mediterranean restaurant, focused on traditional recipes served with a modern twist.")
+                                    .font(.system(size: 22, weight: .semibold))
+                                    .foregroundColor(.white)
+                            }
+                            Image("Hero_image")
+                                .resizable()
+                                .cornerRadius(12)
+                                .frame(width: 100, height: 100)
+                                
                         }
-                        Image("Hero_image")
-                            .resizable()
-                            .cornerRadius(12)
-                            
+                    }.padding(12).background(.green)
+                    VStack {
+                        InputTextForm(text: $firstName, textLabel: "First Name")
+                            .padding(.vertical)
+                        InputTextForm(text: $lastName, textLabel: "Last Name")
+                            .padding(.vertical)
+                        InputTextForm(text: $email, textLabel: "Email")
+                            .padding(.vertical)
+                    }.padding()
+                    NavigationLink(isActive: $isLoggedIn) {
+                        HomeView()
+                    } label: {
+                        EmptyView()
                     }
-                }.padding(12).background(.green)
-                InputTextForm(text: $firstName, textLabel: "First Name")
-                    .padding(.vertical)
-                InputTextForm(text: $lastName, textLabel: "Last Name")
-                    .padding(.vertical)
-                InputTextForm(text: $email, textLabel: "Email")
-                    .padding(.vertical)
-                NavigationLink(isActive: $isLoggedIn) {
-                    HomeView()
-                } label: {
-                    EmptyView()
-                }
 
-                Button {
-                    if firstName.isEmpty {
-                        return
-                    }
-                    if lastName.isEmpty {
-                        return
-                    }
-                    if email.isEmpty {
-                        return
-                    }
-                    UserDefaults.standard.set(firstName, forKey: kFirstName)
-                    UserDefaults.standard.set(lastName, forKey: kLastName)
-                    UserDefaults.standard.set(email, forKey: kEmail)
-                    UserDefaults.standard.set(true, forKey: kIsLoggedIn)
-                    isLoggedIn = true
-                } label: {
-                    Text("Register")
-                }.padding(.vertical)
-                Spacer()
-            }.onAppear(perform: {
+                    Button {
+                        if firstName.isEmpty {
+                            return
+                        }
+                        if lastName.isEmpty {
+                            return
+                        }
+                        if email.isEmpty {
+                            return
+                        }
+    //                    UserDefaults.standard.set(firstName, forKey: kFirstName)
+    //                    UserDefaults.standard.set(lastName, forKey: kLastName)
+    //                    UserDefaults.standard.set(email, forKey: kEmail)
+                        UserDefaults.standard.set(true, forKey: kIsLoggedIn)
+                        let context = self.viewContext
+                        let user = UserProfile(context: context)
+                        user.firstName = self.firstName
+                        user.lastName = self.lastName
+                        user.email = self.email
+                        try? context.save()
+                        isLoggedIn = true
+                    } label: {
+                        Text("Register")
+                    }.padding(.vertical)
+                    Spacer()
+                }
+            }).onAppear(perform: {
                 self.isLoggedIn = UserDefaults.standard.bool(forKey: kIsLoggedIn)
+                let first = "Little Lemon "
+                let second = "Restaurant"
+                let concatenated = "\(first)" + "\(second)"
             })
             .toolbar {
                 ToolbarItem(placement: .principal, content: {

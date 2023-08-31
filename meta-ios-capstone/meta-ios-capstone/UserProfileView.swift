@@ -50,13 +50,14 @@ struct UserProfileView: View {
     @State var avatar: Data?
     @State var avatarSelectedItem: PhotosPickerItem?
     @Environment(\.presentationMode) var presentation
+    @Environment(\.managedObjectContext) var viewContext
     
     var body: some View {
         ScrollView {
             VStack(alignment: .leading) {
                 Text("Personal information")
                 HStack {
-                    AvatarView()
+                    AvatarView(avatar: self.$avatar)
 //                        .resizable()
                         .frame(width: 80, height: 80)
                         .padding(.horizontal)
@@ -145,15 +146,21 @@ struct UserProfileView: View {
                             )
                         
                         Button {
-                            UserDefaults.standard.set(self.firstName, forKey: kFirstName)
-                            UserDefaults.standard.set(self.lastName, forKey: kLastName)
-                            UserDefaults.standard.set(self.email, forKey: kEmail)
-                            UserDefaults.standard.set(self.phoneNumber, forKey: kPhoneNumber)
+//                            UserDefaults.standard.set(self.firstName, forKey: kFirstName)
+//                            UserDefaults.standard.set(self.lastName, forKey: kLastName)
+//                            UserDefaults.standard.set(self.email, forKey: kEmail)
+//                            UserDefaults.standard.set(self.phoneNumber, forKey: kPhoneNumber)
                             UserDefaults.standard.set(self.orderStatuses, forKey: kOrderStatuses)
                             UserDefaults.standard.set(self.passwordChanged, forKey: kPasswordChanged)
                             UserDefaults.standard.set(self.specialOffers, forKey: kSpecialOffers)
                             UserDefaults.standard.set(self.newsletter, forKey: kNewsletter)
-                            UserDefaults.standard.set(self.avatar, forKey: kAvatar)
+//                            UserDefaults.standard.set(self.avatar, forKey: kAvatar)
+                            let user = try? self.viewContext.fetch(UserProfile.fetchRequest()).first
+                            user?.firstName = self.firstName
+                            user?.lastName = self.lastName
+                            user?.email = self.email
+                            user?.phoneNumber = self.phoneNumber
+                            user?.avatar = self.avatar
                             self.presentation.wrappedValue.dismiss()
                         } label: {
                             Text("Save changes")
@@ -183,15 +190,25 @@ struct UserProfileView: View {
     }
     
     func setupInitialData() {
-        self.firstName = UserDefaults.standard.string(forKey: kFirstName) ?? ""
-        self.lastName = UserDefaults.standard.string(forKey: kLastName) ?? ""
-        self.email = UserDefaults.standard.string(forKey: kEmail) ?? ""
-        self.phoneNumber = UserDefaults.standard.string(forKey: kPhoneNumber) ?? ""
+//        self.firstName = UserDefaults.standard.string(forKey: kFirstName) ?? ""
+//        self.lastName = UserDefaults.standard.string(forKey: kLastName) ?? ""
+//        self.email = UserDefaults.standard.string(forKey: kEmail) ?? ""
+//        self.phoneNumber = UserDefaults.standard.string(forKey: kPhoneNumber) ?? ""
+//        self.orderStatuses = UserDefaults.standard.bool(forKey: kOrderStatuses)
+//        self.passwordChanged = UserDefaults.standard.bool(forKey: kPasswordChanged)
+//        self.specialOffers = UserDefaults.standard.bool(forKey: kSpecialOffers)
+//        self.newsletter = UserDefaults.standard.bool(forKey: kNewsletter)
+//        self.avatar = UserDefaults.standard.data(forKey: kAvatar)
+        let user = try? self.viewContext.fetch(UserProfile.fetchRequest()).first
+        self.firstName = user?.firstName ?? ""
+        self.lastName = user?.lastName ?? ""
+        self.email = user?.email ?? ""
+        self.phoneNumber = user?.phoneNumber ?? ""
+        self.avatar = user?.avatar
         self.orderStatuses = UserDefaults.standard.bool(forKey: kOrderStatuses)
         self.passwordChanged = UserDefaults.standard.bool(forKey: kPasswordChanged)
         self.specialOffers = UserDefaults.standard.bool(forKey: kSpecialOffers)
         self.newsletter = UserDefaults.standard.bool(forKey: kNewsletter)
-        self.avatar = UserDefaults.standard.data(forKey: kAvatar)
     }
 }
 
@@ -202,15 +219,32 @@ struct UserProfileView_Previews: PreviewProvider {
 }
 
 struct AvatarView: View {
-    @State var avatar: Data?
+    @Binding var avatar: Data?
     
     var body: some View {
-        (
-            self.avatar != nil ? Image(uiImage: UIImage(data: self.avatar!)!) : Image("profile-image-placeholder")
-        )
-        .resizable()
-        .onAppear {
-            self.avatar = UserDefaults.standard.data(forKey: kAvatar)
+//        (
+//            self.avatar != nil ? Image(uiImage: UIImage(data: self.avatar!)!) : Image("profile-image-placeholder")
+//        )
+//        .resizable()
+//        .onAppear {
+//            self.avatar = UserDefaults.standard.data(forKey: kAvatar)
+//        }
+        FetchedObjects { (users: [UserProfile]) in
+            if let dt = self.avatar {
+                Image(uiImage: UIImage(data: dt)!)
+                    .resizable()
+            } else if let dt = users.first?.avatar {
+                Image(uiImage: UIImage(data: dt)!)
+                    .resizable()
+            } else {
+                Image("profile-image-placeholder")
+                    .resizable()
+            }
+//            (
+                
+//                users.first?.avatar != nil ? Image(uiImage: UIImage(data: (users.first?.avatar)!)!) : Image("profile-image-placeholder")
+//            )
+            
         }
     }
 }

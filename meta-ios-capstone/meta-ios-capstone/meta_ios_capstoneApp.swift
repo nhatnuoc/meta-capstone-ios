@@ -11,7 +11,14 @@ import SwiftUI
 struct meta_ios_capstoneApp: App {
     var body: some Scene {
         WindowGroup {
-            OnboardingView()
+            
         }
+    }
+}
+
+struct MainView: View {
+    var body: some View {
+        OnboardingView()
+            .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
     }
 }
